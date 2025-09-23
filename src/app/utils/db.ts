@@ -99,6 +99,40 @@ export async function getFamily({
     return "DB_ERROR";
   }
 }
+export async function getMe({
+  full_code,
+}: {
+  full_code: string;
+}): Promise<Member | "DB_ERROR" | null> {
+  // get family
+  const family = await getFamily({ full_code: full_code, force_nostrip: true });
+  const passcode = full_code.split("_")[1];
+
+  // handle getFamily return
+  switch (family) {
+    case "DB_ERROR":
+      // db is null
+      return "DB_ERROR";
+    case null:
+      // family data is null
+      return null;
+
+    default:
+      // cast family to a full family object since we used force_nostrip and know its the full data
+      const family_: Family = Object(family);
+
+      // find the member
+      const member = family_.members.find(
+        (member: Member) => member.passcode === passcode
+      );
+      if (member) {
+        // return the member
+        return member;
+      } else {
+        return null;
+      }
+  }
+}
 
 export async function addPayment({
   family_code,

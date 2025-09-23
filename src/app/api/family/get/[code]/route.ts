@@ -2,7 +2,7 @@
 // /api/family/get/[code]
 
 import { Family, FamilyStripped } from "@/app/models/db";
-import { getFamily, isAdminCode } from "@/app/utils/db";
+import { getFamily, getMe, isAdminCode } from "@/app/utils/db";
 
 // GET /api/family/get/[code]
 // gets a family using full code or family code
@@ -56,7 +56,6 @@ export async function GET(
       );
 
     default:
-      // checks if the requesting user is an admin
       if (!isFullCode) {
         // a full code was not provided, so we cant determine if the user is admin or not
         return new Response(
@@ -70,12 +69,19 @@ export async function GET(
           }
         );
       }
+
+      // full_code was provided so we can get "me" (the user requesting)
+      // sending it with /api/family/get saves us a request on the client
+      const me = await getMe({ full_code: code });
+
+      // checks if the requesting user is an admin
       if (!(await isAdminCode({ full_code: code }))) {
         // requesting user is not admin, meaning the family variable is a stripped family
         return new Response(
           JSON.stringify({
             status: "success",
             family: family,
+            me: me,
             adminview: false,
           }),
           {
@@ -87,6 +93,7 @@ export async function GET(
           JSON.stringify({
             status: "success",
             family: family,
+            me: me,
             adminview: true,
           }),
           {
