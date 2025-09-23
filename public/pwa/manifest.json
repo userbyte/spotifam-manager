@@ -1,0 +1,18 @@
+{
+  "short_name": "sfmgr",
+  "name": "spotifam-manager",
+  "start_url": "/",
+  "background_color": "#000000",
+  "theme_color": "#1ed760",
+  "description": "spotify family finance management application",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "../img/png/logo_nomask.png",
+      "sizes": "750x750",
+      "type": "image/png",
+      "density": "1.0"
+    }
+  ]
+}
