@@ -23,16 +23,10 @@ docker pull userbyte/sfmgr:latest
 #     $PORT :: the port you want sfmgr to be exposed on
 #    $MONGO :: URI for your MongoDB instance (ex. mongodb://127.0.0.1:27017)
 #   $SECRET :: some super incredibly secret string
-export NAME="sfmgr" \
-export PORT="..." \
-export SECRET="..." \
-export MONGO="..." \
-docker create -p $PORT:3000 \
- --volume $NAME:/app \
- --env MONGO_URI=$MONGO \
- --env JOB_SECRET=$SECRET \
- --name $NAME \
- \ --restart always userbyte/sfmgr:latest
+export NAME="sfmgr";
+export MONGO="...";
+export SECRET="...";
+docker create --volume $NAME:/app --env MONGO_URI=$MONGO --env JOB_SECRET=$SECRET --name $NAME --network=host --restart always userbyte/sfmgr:latest
 ```
 
 **start the container**
