@@ -2,6 +2,7 @@
 
 - [x] family overview page
 - [x] create new families
+- [ ] edit families
 - [x] join families as a member
 - [x] add payments (member + admin)
 - [ ] edit payments
@@ -16,5 +17,7 @@
 
 ## (improvements)
 
-- [ ] dockerize
+- [x] dockerize
 - [ ] log to file
+- [ ] mobile css
+- [ ] add metadata to all pages
