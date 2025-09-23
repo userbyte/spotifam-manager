@@ -1,7 +1,7 @@
 // API Route
 // /api/family/me/[code]
 
-import { Family, Member } from "@/app/models/db";
+import { Family, FamilyStripped, Member } from "@/app/models/db";
 import { getFamily } from "@/app/utils/db";
 
 // GET /api/family/me/[code]
@@ -11,26 +11,42 @@ export async function GET(
   { params }: { params: Promise<{ code: string }> }
 ) {
   // process params
-  const full_code = (await params).code;
-  // let family_code: string;
-  let passcode: string;
-  if (!full_code) {
+  const code = (await params).code;
+  if (!code) {
     return new Response(
       JSON.stringify({
         status: "failed",
-        error: "Client sent a request without a family code",
+        error: "Client sent a request without a full code",
       }),
       {
         status: 400,
       }
     );
-  } else {
-    // family_code = full_code.split("_")[0];
-    passcode = full_code.split("_")[1];
   }
-
+  // we need to know if this is a full code or just the family code
+  let isFullCode: boolean = false;
+  if (code.includes("_")) {
+    isFullCode = true;
+  }
+  let family: Family | FamilyStripped | "DB_ERROR" | null;
+  // let family_code: string;
+  let passcode: string;
   // get family
-  const family = await getFamily({ full_code: full_code, force_nostrip: true });
+  if (isFullCode) {
+    family = await getFamily({ full_code: code, force_nostrip: true });
+    // family_code = full_code.split("_")[0];
+    passcode = code.split("_")[1];
+  } else {
+    return new Response(
+      JSON.stringify({
+        status: "failed",
+        error: "Client sent a request without a full code",
+      }),
+      {
+        status: 400,
+      }
+    );
+  }
 
   // handle getFamily return
   switch (family) {

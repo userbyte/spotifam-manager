@@ -58,38 +58,39 @@ export async function getFamily({
       );
 
       // check if the passcode provided is an admin
-      if (member.admin) {
-        // if the member is an admin, return the full family data
+      if (full_code) {
+        if (member.admin) {
+          // if the member is an admin, return the full family data
+          return family_;
+        }
+      }
+      // if the above checks did not pass, we return a stripped down version of the family data
+      const members_: Array<MemberStripped> = [];
+      family.members.forEach((member: Member) => {
+        members_.push({
+          name: member.name,
+          balance: member.balance,
+          admin: member.admin,
+        });
+      });
+
+      const family_stripped: FamilyStripped = {
+        name: family_.name,
+        family_code: family_.family_code,
+        plan_start: family_.plan_start,
+        next_renewal: family.next_renewal,
+        price: family_.price,
+        members: members_,
+        payments: family_.payments,
+      };
+
+      if (force_nostrip) {
+        // force_nostrip has been set, this is a backend-only thing. the data should NEVER get sent to the client if this option is used
+        // return the full family data...
         return family_;
       } else {
-        // if the member is not an admin, we return a stripped down non-admin version of family data
-        const members_: Array<MemberStripped> = [];
-        family.members.forEach((member: Member) => {
-          members_.push({
-            name: member.name,
-            balance: member.balance,
-            admin: member.admin,
-          });
-        });
-
-        const family_stripped: FamilyStripped = {
-          name: family_.name,
-          family_code: family_.family_code,
-          plan_start: family_.plan_start,
-          next_renewal: family.next_renewal,
-          price: family_.price,
-          members: members_,
-          payments: family_.payments,
-        };
-
-        if (force_nostrip) {
-          // force_nostrip has been set, this is a backend-only thing. the data should NEVER get sent to the client if this option is used
-          // return the full family data...
-          return family_;
-        } else {
-          // return stripped family data
-          return family_stripped;
-        }
+        // return stripped family data
+        return family_stripped;
       }
     }
   } else {
