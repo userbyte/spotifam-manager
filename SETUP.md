@@ -64,7 +64,7 @@ _[spoooky secret generator api](https://api.stringgy.com/?length=30&amount=1&typ
 
 ```sh
 # .env
-MONGO_URI="mongodb://127."
+MONGO_URI="mongodb://..."
 JOB_SECRET="something_secret"
 ```
 
