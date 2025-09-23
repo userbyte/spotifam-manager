@@ -1,0 +1,22 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  height: 80vh;
+  font-size: 1.4vh;
+}
+
+.main h1 {
+  text-align: center;
+}
+
+.main div[class="widthcontainer"] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: fit-content;
+}

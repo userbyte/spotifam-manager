@@ -1,0 +1,98 @@
+@keyframes redshake {
+  0% {
+    border-color: #cf2222;
+  }
+  30% {
+    border-color: #cf2222;
+    transform: translateX(-3px);
+  }
+
+  60% {
+    border-color: #cf2222;
+    transform: translateX(3px);
+  }
+  100% {
+    border-color: initial;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* width: 60%; */
+  max-width: 34em;
+  padding: 0.8em 2em;
+  padding-bottom: 2em;
+  background-color: var(--element-background);
+  border-radius: 8px;
+}
+
+.main label {
+  font-family: inherit;
+  font-weight: bold;
+}
+
+.main span {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+
+.main input[class="redshake"] {
+  animation: redshake 250ms linear;
+}
+
+.main div[class="startdatediv"] input,
+.main div[class="costdiv"] input {
+  margin-top: 0.5em;
+}
+
+.main div[class="startdatediv"] {
+  width: 60%;
+}
+
+.main div[class="costdiv"] {
+  width: 40%;
+}
+
+.member_list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.member_list span {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  border: 2px solid #4f4f4f;
+  border-radius: 48px;
+  justify-content: space-between;
+}
+
+.member_list span p {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-left: 1em;
+}
+
+.member_list span button {
+  background-color: white;
+  font-size: 1.4em;
+  padding: 0.2em 0.3em;
+  margin-right: 0.4em;
+}
+
+.member_list span button:hover {
+  margin-right: 0.3em;
+  font-size: 1.5em;
+  background-color: #d8d8d8;
+}
+.main p[class="admin_notice"] {
+  padding: 0;
+  margin: 0;
+  font-style: italic;
+}

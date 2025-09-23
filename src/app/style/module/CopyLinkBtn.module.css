@@ -1,0 +1,22 @@
+.main {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0;
+  height: auto;
+}
+.main button {
+  font-size: inherit;
+  font-family: var(--font-source-code-pro);
+  color: #c9c9c9;
+  cursor: pointer;
+  border: unset;
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  background: unset;
+  padding: 3px;
+}
+
+.main button:hover {
+  color: white;
+}

@@ -1,0 +1,32 @@
+.backbtn {
+  text-align: center;
+}
+.backbtn button {
+  font-size: 1.7rem;
+  padding: 0.1em 0.2em;
+  padding-top: 0.15em;
+  height: fit-content;
+  background-color: white;
+}
+.backbtn button:hover {
+  cursor: pointer;
+}
+
+/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+/* responsive shit */
+/* gave up on trying to make this shit work without media queries lol */
+
+/* 1920px width screen */
+/* @media only screen and (max-width: 1920px) {
+} */
+
+/* less than 1280px width screen */
+/* @media only screen and (max-width: 1280px) {
+} */
+
+/* less than 1000px width screen -- most phones*/
+@media only screen and (max-width: 1000px) {
+  .backbtn {
+    justify-self: right;
+  }
+}

@@ -1,0 +1,24 @@
+.footer {
+  position: fixed;
+  left: 0px;
+  bottom: 10px;
+  width: 100%;
+  opacity: 78%;
+  font-family: var(--font-source-code-pro);
+  font-size: 1vh;
+  text-align: center;
+  margin: auto;
+}
+.footer a {
+  text-decoration: underline;
+}
+
+@media only screen and (max-height: 1000px) {
+  .footer {
+    position: relative;
+    font-size: 1.5rem;
+    padding-top: 2rem;
+    margin-top: 14rem;
+    border-top: solid 1px white;
+  }
+}

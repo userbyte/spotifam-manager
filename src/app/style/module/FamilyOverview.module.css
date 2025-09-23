@@ -1,0 +1,135 @@
+.main {
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: center; */
+  /* gap: 8px; */
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.6fr 1.4fr;
+  gap: 0.5em 0.5em;
+  grid-template-areas:
+    ". transactions"
+    ". transactions";
+  width: 70%;
+  background-color: var(--element-background);
+  padding: 0.8em 2em;
+  padding-bottom: 2em;
+  border-radius: 8px;
+}
+
+.main div[class="family_info_container"],
+.main div[class="member_list_container"],
+.main div[class="payment_log_container"] {
+  padding: 0.5em;
+  padding-top: 0;
+  border: 2px solid var(--element-foreground);
+  border-radius: 8px;
+}
+
+.main div[class="payment_log_container"] {
+  grid-area: transactions;
+}
+.main div[class="payment_log"] {
+  overflow-y: scroll;
+}
+
+.main div[class="payment_log_container"] p[class="payment_log_key"] {
+  padding: 0;
+  margin-top: -0.2em;
+}
+
+.main div[class="payment_log_container"] span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.main div[class="payment_log_container"] button {
+  font-size: 1em;
+  height: fit-content;
+}
+
+.main div[class="member_list"] {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 10px 10px;
+  grid-template-areas:
+    ". ."
+    ". ."
+    ". .";
+}
+
+.main div[class="member_list"] div[class="member_item"] {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 8px;
+  padding: 1em;
+  background-color: #1f1f1f;
+}
+.main div[class="member_list"] div[class="member_item"]:hover {
+  background-color: #292929;
+}
+
+.main
+  div[class="member_list"]
+  div[class="member_item"]
+  span[class="member_info"] {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.main
+  div[class="member_list"]
+  div[class="member_item"]
+  span[class="member_info"]
+  p {
+  padding: 0;
+  margin: 0;
+}
+
+.main
+  div[class="member_list"]
+  div[class="member_item"]
+  span[class="member_action_buttons"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 2em;
+  height: 100%;
+  /* background-color: #2b2b2b; */
+  padding: 0.5em;
+  border-radius: 8px;
+}
+
+.main
+  div[class="member_list"]
+  div[class="member_item"]
+  span[class="member_action_buttons"]
+  p {
+  padding: 0;
+  margin: 0;
+}
+
+.main
+  div[class="member_list"]
+  div[class="member_item"]
+  span[class="member_action_buttons"]
+  button {
+  font-size: 0.9em;
+  background-color: #e6e6e6;
+  border-radius: 12px;
+}
+
+.main a[class="approve_deny_buttons"] {
+  text-decoration: underline;
+}
+
+.main a[class="approve_deny_buttons"]:hover {
+  color: #a7a7a7;
+  cursor: pointer;
+}

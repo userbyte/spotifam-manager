@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  top: 0;
+  text-align: center;
+  margin-bottom: 30px;
+  font-family: var(--font-spotify-mix);
+}
+
+.header h1 {
+  padding: 0;
+  margin: 0;
+  font-size: 3svh;
+}
+
+.header p {
+  padding: 0;
+  margin: 0;
+  font-size: 2svh;
+}
+
+.header a {
+  text-decoration: unset;
+  color: white;
+  font: inherit;
+  font-weight: bold;
+}
+
+.header .backbtn {
+  margin-left: -24vw;
+  /* margin-top: -100%; */
+  padding: 10px;
+  background: unset;
+  border: 1px white solid;
+  color: white;
+  font-size: 1.8em;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+.header img[class="logo"] {
+  width: 50px;
+  height: 50px;
+}
