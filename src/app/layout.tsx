@@ -101,7 +101,7 @@ const font_SpotifyMix = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL("https://sfmgr.userbyte.xyz"),
   title: "spotifam-manager",
-  description: "manage a spotify family financially",
+  description: "manage your spotify family",
   keywords: [],
   manifest: "/pwa/manifest.json",
   icons: {
