@@ -1,10 +1,11 @@
 // API Route
-// /api/family/get/[code]
+// /api/family/[code]
+// Supported methods: GET
 
 import { Family, FamilyStripped } from "@/app/models/db";
 import { getFamily, getMe, isAdminCode } from "@/app/utils/db";
 
-// GET /api/family/get/[code]
+// GET /api/family/[code]
 // gets a family using full code or family code
 export async function GET(
   request: Request,
