@@ -16,49 +16,24 @@ import { toast } from "react-toastify";
 import EditMemberModal from "./EditMemberModal";
 import AddMemberModal from "./AddMemberModal";
 import RemoveMemberModal from "./RemoveMemberModal";
+import { useQuery } from "@tanstack/react-query";
 
-// const mockFamily: Family = {
-//   name: "parga test",
-//   family_code: "1234",
-//   plan_start: 1721275200,
-//   price: 20,
-//   members: [
-//     {
-//       name: "admin",
-//       balance: 0,
-//       passcode: "0000",
-//       admin: true,
-//     },
-//     {
-//       name: "anton",
-//       balance: 10,
-//       passcode: "1111",
-//       admin: false,
-//     },
-//     {
-//       name: "mark",
-//       balance: 0,
-//       passcode: "2222",
-//       admin: false,
-//     },
-//     {
-//       name: "dom",
-//       balance: 10,
-//       passcode: "3333",
-//       admin: false,
-//     },
-//     // code for logins will be [FAMILY CODE]_[PASSCODE]
-//     // ex. for admin: 1234_0000
-//     // for anton: 1234_1111
-//     //
-//     // obviously, we'll use randomly generated strings, maybe 4 or 5 random lowercase characters including numbers
-//   ],
-//   payments: [
-//     { id: 1, timestamp: 1758156285, member: "mark", amount: 81 },
-//     { id: 2, timestamp: 1758156285, member: "dom", amount: 40 },
-//   ],
-//   charges: [{ id: 1, timestamp: 1758156285, amount: 20 }],
-// };
+function Loading() {
+  return (
+    <div className={styles.main}>
+      <h1>Loading...</h1>
+    </div>
+  );
+}
+
+function Error({ err }: { err: Error }) {
+  return (
+    <div className={styles.main}>
+      <h1>Error loading family overview</h1>
+      <p>{err.message}</p>
+    </div>
+  );
+}
 
 export default function FamilyOverview({
   searchParams_,
@@ -68,7 +43,7 @@ export default function FamilyOverview({
   // process params
   // const searchParams = useSearchParams();
   const searchParams = use(searchParams_);
-  const full_code = searchParams.code;
+  const code = searchParams.code;
 
   // states
   // so.. many... modal states... surely there is a better way to do this
@@ -98,40 +73,6 @@ export default function FamilyOverview({
   });
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [targetMember, setTargetMember] = useState<Member | null>(null);
-
-  useEffect(() => {
-    if (full_code) {
-      // get family data from api
-      fetch(`/api/family/get/${full_code}`, {
-        method: "GET",
-      })
-        .then((resp) => resp.json())
-        .then((resp_json) => {
-          if (resp_json.status) {
-            if (resp_json.status === "success") {
-              if (resp_json.adminview) {
-                setIsAdmin(true);
-              }
-              setFamily(resp_json.family);
-            } else {
-              toast.error("Error getting family data");
-            }
-          }
-        });
-
-      fetch(`/api/family/me/${full_code}`, {
-        method: "GET",
-      })
-        .then((resp) => resp.json())
-        .then((resp_json) => {
-          if (resp_json.status) {
-            if (resp_json.status === "success") {
-              setMe(resp_json.member);
-            }
-          }
-        });
-    }
-  }, [full_code]);
 
   function generateMemberEls(memberList: Array<Member>) {
     const memberEls: Array<React.JSX.Element> = [];
@@ -278,7 +219,7 @@ export default function FamilyOverview({
       fetch(`/api/family/payments`, {
         method: "PATCH",
         body: JSON.stringify({
-          full_code: full_code,
+          full_code: code,
           payment: {
             id: paymentID,
             approved: true,
@@ -320,7 +261,7 @@ export default function FamilyOverview({
       fetch(`/api/family/payments`, {
         method: "PATCH",
         body: JSON.stringify({
-          full_code: full_code,
+          full_code: code,
           payment: {
             id: paymentID,
             approved: false,
@@ -350,6 +291,31 @@ export default function FamilyOverview({
         });
     }
   }
+
+  // get data
+  const familyResult = useQuery({
+    queryKey: ["familyData"],
+    queryFn: async () => {
+      const response = await fetch(`/api/family/${code}`, {
+        method: "GET",
+      });
+      return await response.json();
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+
+  useEffect(() => {
+    // handle data from queries
+    if (familyResult.data) {
+      setFamily(familyResult.data.family);
+      if (familyResult.data.me) setMe(familyResult.data.me);
+      setIsAdmin(familyResult.data.adminview);
+    }
+  }, [familyResult.data]);
+
+  if (familyResult.isPending) return <Loading />;
+
+  if (familyResult.error) return <Error err={familyResult.error} />;
 
   return (
     <div className={styles.main}>

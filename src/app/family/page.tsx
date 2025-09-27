@@ -48,7 +48,9 @@ export default function FamilyOverviewPage({
   return (
     <div className={styles.main}>
       <Suspense>
-        <FamilyOverview searchParams_={searchParams} />
+        <QueryClientProviderWrapper>
+          <FamilyOverview searchParams_={searchParams} />
+        </QueryClientProviderWrapper>
       </Suspense>
     </div>
   );
