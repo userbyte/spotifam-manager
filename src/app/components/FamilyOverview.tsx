@@ -402,13 +402,17 @@ export default function FamilyOverview({
       <div className="payment_log_container">
         <span>
           <h2>Payments</h2>
-          <button
-            onClick={() => {
-              setDisplayAddPaymentModal(!displayAddPaymentModal);
-            }}
-          >
-            Add <FontAwesomeIcon icon={faAdd} />
-          </button>
+          {me.name === "null" && me.passcode === "" ? (
+            <></>
+          ) : (
+            <button
+              onClick={() => {
+                setDisplayAddPaymentModal(!displayAddPaymentModal);
+              }}
+            >
+              Add <FontAwesomeIcon icon={faAdd} />
+            </button>
+          )}
         </span>
         <div className="payment_log">
           <p className="payment_log_key">
