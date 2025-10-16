@@ -37,6 +37,22 @@ export async function generateMetadata({
     return {
       title: `Family: ${family.name}`,
       description: `${family.members.length} members`,
+      openGraph: {
+        siteName: `spotifam-manager`,
+        title: `Family: ${family.name}`,
+        description: `${family.members.length} members`,
+        images: [
+          {
+            url: "https://sfmgr.userbyte.xyz/img/png/logo.png",
+            width: 175,
+            height: 175,
+          },
+        ],
+      },
+      twitter: {
+        // image too big on discord embed, so we unset
+        images: [],
+      },
     };
   }
 }
