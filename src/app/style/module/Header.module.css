@@ -1,6 +1,7 @@
 .header {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 6px;
   top: 0;
   text-align: center;
