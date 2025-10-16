@@ -2,13 +2,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-items: center;
   gap: 8px;
   background-color: #121212;
   padding: 0.8em 2em;
   padding-bottom: 2em;
   border-radius: 8px;
 }
+
 .main button {
+  border: 2px solid #1ed760;
   height: fit-content;
   width: fit-content;
+  font-weight: 1000;
+}
+
+.main span {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.main span :nth-child(1) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.main span :nth-child(2) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
