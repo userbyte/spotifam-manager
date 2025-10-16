@@ -26,7 +26,7 @@ docker pull userbyte/sfmgr:latest
 export NAME="sfmgr";
 export MONGO="...";
 export SECRET="...";
-docker create --volume $NAME:/app --env MONGO_URI=$MONGO --env JOB_SECRET=$SECRET --name $NAME --network=host --restart always userbyte/sfmgr:latest
+docker create --env MONGO_URI=$MONGO --env JOB_SECRET=$SECRET --name $NAME --network=host --restart always userbyte/sfmgr:latest
 ```
 
 **start the container**
