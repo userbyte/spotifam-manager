@@ -390,7 +390,11 @@ export default function FamilyOverview({
         <hr />
         <h1>{family.name}</h1>
         <p>
-          Cost: ${family.price}/mo
+          <b>Cost:</b>
+          <br />${family.price}/mo ($
+          {Math.round((family.price / family.members.length) * 100) / 100}
+          /member)
+          <br />
           <br />
           Next renewal: {prettifyUnixTime(family.next_renewal, "%Y-%M-%d")}
         </p>
