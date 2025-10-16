@@ -31,7 +31,7 @@ export async function generateMetadata({
     family = await getFamily({ family_code: code });
   }
 
-  if (family === "DB_ERROR" || family === null) {
+  if (family === "DB_ERROR" || family === null || family === undefined) {
     return defaultMetadata;
   } else {
     return {
@@ -40,6 +40,7 @@ export async function generateMetadata({
     };
   }
 }
+
 export default function FamilyOverviewPage({
   searchParams,
 }: {
