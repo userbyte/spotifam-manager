@@ -26,11 +26,13 @@ function Loading() {
   );
 }
 
-function Error({ err }: { err: Error }) {
+function PageError({ err }: { err: Error }) {
   return (
     <div className={styles.main}>
-      <h1>Error loading family overview</h1>
-      <p>{err.message}</p>
+      <div className="error">
+        <h1>Error loading family overview</h1>
+        <p>{err.message}</p>
+      </div>
     </div>
   );
 }
@@ -215,7 +217,7 @@ export default function FamilyOverview({
     if (e.currentTarget) {
       const paymentID = Number(e.currentTarget.getAttribute("data-payment-id"));
 
-      // get family data from api
+      // get payments data from api
       fetch(`/api/family/payments`, {
         method: "PATCH",
         body: JSON.stringify({
@@ -305,17 +307,30 @@ export default function FamilyOverview({
   });
 
   useEffect(() => {
-    // handle data from queries
     if (familyResult.data) {
-      setFamily(familyResult.data.family);
-      if (familyResult.data.me) setMe(familyResult.data.me);
-      setIsAdmin(familyResult.data.adminview);
+      if (familyResult.data.family) {
+        // save code to local storage
+        if (code) localStorage.setItem("code", code);
+        // set family state
+        setFamily(familyResult.data.family);
+        // set me state
+        if (familyResult.data.me) setMe(familyResult.data.me);
+        // set admin state
+        setIsAdmin(familyResult.data.adminview);
+      }
     }
-  }, [familyResult.data]);
+  }, [code, familyResult.data]);
+
+  // handle data from queries
+  if (familyResult.data) {
+    if (familyResult.data.status != "success") {
+      familyResult.error = new Error(`Invalid family code: ${code}`);
+    }
+  }
 
   if (familyResult.isPending) return <Loading />;
 
-  if (familyResult.error) return <Error err={familyResult.error} />;
+  if (familyResult.error) return <PageError err={familyResult.error} />;
 
   return (
     <div className={styles.main}>
