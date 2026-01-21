@@ -27,6 +27,19 @@
   border-radius: 8px;
 }
 
+.main div[class="family_info_container"] span[class="family_title"] {
+  display: flex;
+  gap: 1.3em;
+  align-items: center;
+}
+
+.main
+  div[class="family_info_container"]
+  span[class="family_title"]
+  button[title="Edit family"] {
+  height: 50%;
+}
+
 .main div[class="payment_log_container"] {
   grid-area: transactions;
 }
@@ -143,7 +156,7 @@
   padding: 1em;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
   .main {
     display: flex;
 
@@ -153,6 +166,12 @@
     grid-template-columns: unset;
     grid-template-rows: unset;
     grid-template-areas: unset;
-    font-size: 2.9vw;
+    font-size: 1.75vw;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .main {
+    font-size: 3vw;
   }
 }

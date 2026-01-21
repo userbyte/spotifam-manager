@@ -5,6 +5,7 @@ import { Family, Member, Payment } from "../models/db";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,
+  faEdit,
   faTrashAlt,
   faUser,
   faUserEdit,
@@ -17,6 +18,7 @@ import EditMemberModal from "./EditMemberModal";
 import AddMemberModal from "./AddMemberModal";
 import RemoveMemberModal from "./RemoveMemberModal";
 import { useQuery } from "@tanstack/react-query";
+import EditFamilyModal from "./EditFamilyModal";
 
 function Loading() {
   return (
@@ -52,6 +54,8 @@ export default function FamilyOverview({
   const [displayAddPaymentModal, setDisplayAddPaymentModal] =
     useState<boolean>(false);
   const [displayAddMemberModal, setDisplayAddMemberModal] =
+    useState<boolean>(false);
+  const [displayEditFamilyModal, setDisplayEditFamilyModal] =
     useState<boolean>(false);
   const [displayEditMemberModal, setDisplayEditMemberModal] =
     useState<boolean>(false);
@@ -98,7 +102,7 @@ export default function FamilyOverview({
           {isAdmin ? (
             <span className="member_action_buttons">
               <button
-                title="Edit"
+                title="Edit member"
                 data-member-name={member.name}
                 onClick={(e) => {
                   if (!e.currentTarget) return;
@@ -117,7 +121,7 @@ export default function FamilyOverview({
                 <FontAwesomeIcon icon={faUserEdit} />
               </button>
               <button
-                title="Delete"
+                title="Delete member"
                 data-member-name={member.name}
                 onClick={(e) => {
                   if (!e.currentTarget) return;
@@ -126,10 +130,14 @@ export default function FamilyOverview({
                     e.currentTarget.getAttribute("data-member-name");
 
                   // find the member
-                  const memberIndex = family.members.findIndex(
+                  const member = family.members.find(
                     (member: Member) => member.name === memberName
                   );
-                  setTargetMember(family.members[memberIndex]);
+                  if (member === undefined) {
+                    console.error("Could not find the member to delete. What?");
+                    return;
+                  }
+                  setTargetMember(member);
                   setDisplayRemoveMemberModal((cur) => !cur);
                 }}
               >
@@ -334,6 +342,18 @@ export default function FamilyOverview({
 
   return (
     <div className={styles.main}>
+      {displayEditFamilyModal ? (
+        <>
+          <EditFamilyModal
+            setFamily={setFamily}
+            isAdmin={isAdmin}
+            family={family}
+            setDisplayEditFamilyModal={setDisplayEditFamilyModal}
+          />
+        </>
+      ) : (
+        <></>
+      )}
       {displayAddPaymentModal ? (
         <>
           <AddPaymentModal
@@ -388,7 +408,20 @@ export default function FamilyOverview({
       <div className="family_info_container">
         <h1>Family overview {isAdmin ? "[Admin View]" : <></>}</h1>
         <hr />
-        <h1>{family.name}</h1>
+        <span className="family_title">
+          <h1>{family.name}</h1>
+          <button
+            title="Edit family"
+            onClick={(e) => {
+              if (!e.currentTarget) return;
+
+              setDisplayEditFamilyModal((cur) => !cur);
+            }}
+          >
+            <FontAwesomeIcon icon={faEdit} />
+          </button>
+        </span>
+
         <p>
           <b>Cost:</b>
           <br />${family.price}/mo ($

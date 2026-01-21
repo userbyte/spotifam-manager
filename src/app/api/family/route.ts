@@ -4,6 +4,7 @@
 
 import db from "@/app/drivers/db";
 import { Family, Member } from "@/app/models/db";
+import { getFamily, isAdminCode } from "@/app/utils/db";
 import { generateRandomString } from "@/app/utils/shared";
 
 // POST /api/family
@@ -106,17 +107,127 @@ export async function POST(request: Request) {
 // PATCH /api/family
 // edits a family
 export async function PATCH(request: Request) {
-  console.log(request);
-  return new Response(JSON.stringify({}), {
-    status: 200,
-  });
+  // process request body
+  let body_json: { full_code: string; target: string; ediff: object } | null =
+    null;
+  try {
+    body_json = await request.json();
+  } catch {
+    return new Response(
+      JSON.stringify({
+        status: "failed",
+        error: "Missing request body",
+      }),
+      {
+        status: 400,
+      }
+    );
+  } finally {
+    if (body_json === null) {
+      return new Response(
+        JSON.stringify({
+          status: "failed",
+          error: "Missing request body",
+        }),
+        {
+          status: 400,
+        }
+      );
+    }
+  }
+
+  let full_code: string;
+  // let family_code: string;
+  let familyUpd: {
+    name?: string;
+    price?: number;
+  };
+  if (!body_json.full_code || !body_json.ediff) {
+    return new Response(
+      JSON.stringify({
+        status: "failed",
+        error: "Client sent a request without a family code",
+      }),
+      {
+        status: 400,
+      }
+    );
+  } else {
+    // get full code from req body json
+    full_code = body_json.full_code;
+    // get updated values from req body json
+    familyUpd = body_json.ediff;
+  }
+
+  if ((await isAdminCode({ full_code: full_code })) != true) {
+    return new Response(
+      JSON.stringify({
+        status: "failed",
+        error: "Only admins can modify members",
+      }),
+      {
+        status: 403,
+      }
+    );
+  }
+
+  if (db) {
+    // get family
+    const family = await getFamily({ full_code: full_code });
+    if (family && family != "DB_ERROR") {
+      const updated_family: Family = Object(family);
+
+      // apply modifications to the family
+      for (const [key, newValue] of Object.entries(familyUpd)) {
+        // get previous value
+        const currentValue = updated_family[key];
+
+        // is this a valid and pre-existing key?
+        if (currentValue != undefined) {
+          // only update if theres a diff between values
+          if (updated_family[key] != newValue) {
+            console.log(
+              `updating family [${key}: ${currentValue} --> ${newValue}]...`
+            );
+            updated_family[key] = newValue;
+          }
+        } else {
+          console.log(
+            `update ignored: invalid key [${key}: ${currentValue} --> ${newValue}]...`
+          );
+        }
+      }
+
+      // update family in the database by replacing it with the updated family
+      await db
+        .collection("family")
+        .replaceOne({ family_code: family.family_code }, updated_family);
+      return new Response(
+        JSON.stringify({
+          status: "success",
+          // member: updated_family.members[memberIndex],
+        }),
+        {
+          status: 200,
+        }
+      );
+    }
+  }
+
+  return new Response(
+    JSON.stringify({ status: "failed", error: "Unknown error" }),
+    {
+      status: 500,
+    }
+  );
 }
 
 // DELETE /api/family
 // deletes a family
 export async function DELETE(request: Request) {
   console.log(request);
-  return new Response(JSON.stringify({}), {
-    status: 200,
+  // TODO: implement family deletion
+  return new Response(JSON.stringify({ error: "NOT_IMPLEMENTED" }), {
+    status: 501,
   });
 }
