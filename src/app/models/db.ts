@@ -23,6 +23,13 @@ export type Charge = {
 };
 
 export type Family = {
+  [key: string]:
+    | string
+    | number
+    | Array<Member>
+    | Array<Payment>
+    | Array<Charge>
+    | undefined;
   name: string;
   family_code: string;
   plan_start: number;
