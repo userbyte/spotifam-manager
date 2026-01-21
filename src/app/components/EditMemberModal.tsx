@@ -49,24 +49,33 @@ export default function EditMemberModal({
     }
 
     // validate inputs
-    const newMember: {
+    const memberUpd: {
       name?: string;
       balance?: number;
       passcode?: string;
       admin?: boolean;
     } = {};
-    // add all non-empty inputs to the newMember object
+    // add all non-empty inputs to the memberUpd object
     if (nameInputRef.current.value != "") {
-      newMember.name = nameInputRef.current.value;
+      memberUpd.name = nameInputRef.current.value;
     }
     if (balanceInputRef.current.value != "") {
-      newMember.balance = balanceInputRef.current.valueAsNumber;
+      memberUpd.balance = balanceInputRef.current.valueAsNumber;
     }
     if (passcodeInputRef.current.value != "") {
-      newMember.passcode = passcodeInputRef.current.value;
+      memberUpd.passcode = passcodeInputRef.current.value;
     }
     if (adminStatusInputRef.current.checked != targetMember.admin) {
-      newMember.admin = adminStatusInputRef.current.checked;
+      memberUpd.admin = adminStatusInputRef.current.checked;
+    }
+
+    // check if ediff is empty
+    if (Object.entries(memberUpd).length === 0) {
+      console.log("submitMemberEdit(): no edits to apply");
+      toast.info("No changes made");
+      // close modal
+      setDisplayEditMemberModal((cur) => !cur);
+      return;
     }
 
     // const newMember = {
@@ -82,7 +91,7 @@ export default function EditMemberModal({
       body: JSON.stringify({
         full_code: full_code,
         target: targetMember.name,
-        member: newMember,
+        ediff: memberUpd,
       }),
     });
     const resp_json = await resp.json();

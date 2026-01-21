@@ -171,7 +171,7 @@ export async function POST(request: Request) {
 // edits an existing member
 export async function PATCH(request: Request) {
   // process request body
-  let body_json: { full_code: string; target: string; member: object } | null =
+  let body_json: { full_code: string; target: string; ediff: object } | null =
     null;
   try {
     body_json = await request.json();
@@ -202,13 +202,13 @@ export async function PATCH(request: Request) {
   let full_code: string;
   // let family_code: string;
   let targetMember: string;
-  let member_upd: {
+  let memberUpd: {
     name?: string;
     balance?: number;
     passcode?: string;
     admin?: boolean;
   };
-  if (!body_json.full_code || !body_json.target || !body_json.member) {
+  if (!body_json.full_code || !body_json.target || !body_json.ediff) {
     return new Response(
       JSON.stringify({
         status: "failed",
@@ -223,7 +223,7 @@ export async function PATCH(request: Request) {
     full_code = body_json.full_code;
     // family_code = full_code.split("_")[0];
     targetMember = body_json.target;
-    member_upd = body_json.member;
+    memberUpd = body_json.ediff;
   }
 
   if ((await isAdminCode({ full_code: full_code })) != true) {
@@ -262,7 +262,7 @@ export async function PATCH(request: Request) {
       }
 
       // apply modifications to the member
-      for (const [key, value] of Object.entries(member_upd)) {
+      for (const [key, value] of Object.entries(memberUpd)) {
         if (key === "name") {
           // check if someone else already has this name
 
