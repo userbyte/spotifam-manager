@@ -128,6 +128,8 @@ export default function EditFamilyModal({
           e.stopPropagation();
         }}
       >
+        <p className="title_text">Edit family</p>
+        <hr />
         <label>Name</label>
         <input type="text" placeholder={family.name} ref={nameInputRef} />
         <label>Renewal price ($)</label>

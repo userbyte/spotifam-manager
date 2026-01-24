@@ -140,6 +140,8 @@ export default function EditMemberModal({
           e.stopPropagation();
         }}
       >
+        <p className="title_text">Edit member</p>
+        <hr />
         <label>Name</label>
         <input type="text" placeholder={targetMember.name} ref={nameInputRef} />
         <label>Balance ($)</label>

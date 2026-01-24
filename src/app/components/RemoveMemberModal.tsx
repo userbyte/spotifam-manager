@@ -81,8 +81,11 @@ export default function RemoveMemberModal({
           e.stopPropagation();
         }}
       >
+        <p className="title_text">Remove member</p>
+        <hr />
         <h2>
           Are you sure you want to remove this member?
+          <br />
           <br />
           This action is irreversible.
         </h2>

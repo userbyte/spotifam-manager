@@ -22,6 +22,21 @@
   backdrop-filter: blur(4px);
 }
 
+.main div[class="modal"] p[class="title_text"] {
+  align-self: center;
+  text-align: center;
+  margin: 0;
+  /* margin-bottom: -0.5em; */
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.main div[class="modal"] hr {
+  width: 30%;
+  margin: 0;
+  align-self: center;
+}
+
 .main div[class="modal"] {
   display: flex;
   gap: 10px;
@@ -33,6 +48,7 @@
 }
 
 .main div[class="modal"] h2 {
+  text-align: center;
   max-width: 24ch;
 }
 

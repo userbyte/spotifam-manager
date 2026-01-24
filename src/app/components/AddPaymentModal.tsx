@@ -120,6 +120,8 @@ export default function AddPaymentModal({
           e.stopPropagation();
         }}
       >
+        <p className="title_text">Add a payment</p>
+        <hr />
         <label>Date + time</label>
         <input
           type="datetime-local"

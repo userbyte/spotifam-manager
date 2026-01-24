@@ -98,6 +98,8 @@ export default function AddMemberModal({
           e.stopPropagation();
         }}
       >
+        <p className="title_text">Add member</p>
+        <hr />
         <label>Name</label>
         <input type="text" ref={nameInputRef} />
         <span>
