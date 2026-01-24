@@ -410,16 +410,20 @@ export default function FamilyOverview({
         <hr />
         <span className="family_title">
           <h1>{family.name}</h1>
-          <button
-            title="Edit family"
-            onClick={(e) => {
-              if (!e.currentTarget) return;
+          {isAdmin ? (
+            <button
+              title="Edit family"
+              onClick={(e) => {
+                if (!e.currentTarget) return;
 
-              setDisplayEditFamilyModal((cur) => !cur);
-            }}
-          >
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
+                setDisplayEditFamilyModal((cur) => !cur);
+              }}
+            >
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+          ) : (
+            <></>
+          )}
         </span>
 
         <p>
