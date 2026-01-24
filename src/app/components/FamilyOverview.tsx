@@ -438,7 +438,9 @@ export default function FamilyOverview({
           /member)
           <br />
           <br />
-          Next renewal: {prettifyUnixTime(family.next_renewal, "%Y-%M-%d")}
+          <b>Next renewal:</b>
+          <br />
+          {prettifyUnixTime(family.next_renewal, "%Y-%M-%d")}
         </p>
       </div>
       <div className="member_list_container">
