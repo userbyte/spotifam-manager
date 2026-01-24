@@ -4,6 +4,7 @@
 
 import db from "@/app/drivers/db";
 import { Family, Member, Payment } from "@/app/models/db";
+import { prettifyUnixTime, unixTimestampNow } from "@/app/utils/shared";
 import { WithId, Document } from "mongodb";
 
 // GET /api/jobs/payments
@@ -18,6 +19,7 @@ export async function GET(req: Request) {
     });
   }
   console.log('❰❰ running "payments" job... ❱❱');
+  console.log(`:: job started @ ${prettifyUnixTime(unixTimestampNow())} ::`);
 
   // do job
   if (db) {
@@ -75,6 +77,8 @@ export async function GET(req: Request) {
       }
     );
   }
+
+  console.log(`:: job finished @ ${prettifyUnixTime(unixTimestampNow())} ::`);
 
   console.log('❰❰ "payments" job complete! ❱❱');
   return new Response(JSON.stringify({ status: "success" }), {

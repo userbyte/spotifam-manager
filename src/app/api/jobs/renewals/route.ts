@@ -4,7 +4,7 @@
 
 import db from "@/app/drivers/db";
 import { Charge, Family } from "@/app/models/db";
-import { unixTimestampNow } from "@/app/utils/shared";
+import { prettifyUnixTime, unixTimestampNow } from "@/app/utils/shared";
 import { WithId, Document } from "mongodb";
 
 // GET /api/jobs/renewal
@@ -20,6 +20,7 @@ export async function GET(req: Request) {
   }
 
   console.log('❰❰ running "renewals" job... ❱❱');
+  console.log(`:: job start ${prettifyUnixTime(unixTimestampNow())} ::`);
 
   // do job
   if (db) {
@@ -88,6 +89,7 @@ export async function GET(req: Request) {
     );
   }
 
+  console.log(`:: job finish ${prettifyUnixTime(unixTimestampNow())} ::`);
   console.log('❰❰ "renewals" job complete! ❱❱');
   return new Response(JSON.stringify({ status: "success" }), {
     status: 200,
