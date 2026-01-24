@@ -427,6 +427,11 @@ export default function FamilyOverview({
         </span>
 
         <p>
+          <b>Family code:</b>
+          <br />
+          {family.family_code}
+          <br />
+          <br />
           <b>Cost:</b>
           <br />${family.price}/mo ($
           {Math.round((family.price / family.members.length) * 100) / 100}
