@@ -184,9 +184,17 @@ export default function FamilyOverview({
       logEls.push(
         <p key={payment.id}>
           [{prettifyUnixTime(payment.timestamp)}]{" "}
-          {payment.processed ? "(✅)" : "(⏳)"}
-          {payment.approved ? <></> : "(📬)"} {payment.member} sent a payment of
-          ${payment.amount}
+          {payment.processed ? (
+            <a title="Processed">(✅)</a>
+          ) : (
+            <a title="Pending processing">(⏳)</a>
+          )}
+          {payment.approved ? (
+            <></>
+          ) : (
+            <a title="Awaiting admin approval">(📬)</a>
+          )}{" "}
+          {payment.member} sent a payment of ${payment.amount}
           {isAdmin ? (
             payment.approved ? (
               <></>
