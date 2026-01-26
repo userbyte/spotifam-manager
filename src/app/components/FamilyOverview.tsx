@@ -319,6 +319,8 @@ export default function FamilyOverview({
       });
       return await response.json();
     },
+    // refetch data every 5 minutes
+    refetchInterval: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 5,
   });
 
