@@ -416,7 +416,14 @@ export default function FamilyOverview({
         <></>
       )}
       <div className="family_info_container">
-        <h1>Family overview {isAdmin ? "[Admin View]" : <></>}</h1>
+        <h1>
+          Family overview{" "}
+          {isAdmin ? (
+            <FontAwesomeIcon icon={faUserShield} title="Admin view" />
+          ) : (
+            <></>
+          )}
+        </h1>
         <hr />
         <span className="family_title">
           <h1>{family.name}</h1>

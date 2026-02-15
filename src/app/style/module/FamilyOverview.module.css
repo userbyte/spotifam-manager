@@ -86,7 +86,15 @@
   border-radius: 8px;
   padding: 1em;
   background-color: #1f1f1f;
+  white-space: nowrap;
 }
+
+.main div[class="member_list"] div[class="member_item"] h3 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 9ch;
+}
+
 .main div[class="member_list"] div[class="member_item"]:hover {
   background-color: #292929;
 }
@@ -176,6 +184,19 @@
 
 @media only screen and (max-width: 600px) {
   .main {
-    font-size: 3vw;
+    width: 100%;
+    padding: 0.5em 0.65em;
+    font-size: 3.4vw;
+  }
+
+  .main div[class="member_list"] div[class="member_item"] {
+    padding: 0.8em 0.5em;
+  }
+
+  .main
+    div[class="member_list"]
+    div[class="member_item"]
+    span[class="member_action_buttons"] {
+    margin: 0;
   }
 }
