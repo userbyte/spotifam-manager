@@ -1,6 +1,6 @@
 {
   "name": "spotifam-manager",
-  "version": "0.2.12",
+  "version": "0.4.4",
   "private": true,
   "scripts": {
     "dev": "next dev",

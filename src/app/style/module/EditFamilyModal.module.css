@@ -32,7 +32,7 @@
   animation: scale_in 75ms linear;
 }
 
-.main div[class="modal"] p[class="title_text"] {
+.main div[class="modal"] h2 {
   align-self: center;
   text-align: center;
   margin: 0;
@@ -54,7 +54,7 @@
 }
 
 .main div[class="modal"] button[class="cancel_button"] {
-  width: 30%;
+  width: 35%;
   background-color: white;
   position: relative;
   right: 0;
@@ -65,7 +65,7 @@
 }
 
 .main div[class="modal"] button[class="save_button"] {
-  width: 70%;
+  width: 65%;
 }
 
 .main div[class="modal"] span {
@@ -73,4 +73,13 @@
   flex-direction: row;
   gap: 0.8em;
   margin-top: 1.4em;
+}
+
+.main select {
+  font-size: 1.1em;
+  color: #f1f1f1;
+  background-color: var(--element-foreground);
+  padding: 0.6em;
+  border: 2px solid var(--element-foreground);
+  border-radius: 30px;
 }

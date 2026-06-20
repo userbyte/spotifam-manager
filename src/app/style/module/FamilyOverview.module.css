@@ -20,7 +20,7 @@
 
 .main div[class="family_info_container"],
 .main div[class="member_list_container"],
-.main div[class="payment_log_container"] {
+.main div[class="transaction_log_container"] {
   padding: 0.5em;
   padding-top: 0;
   border: 2px solid var(--element-foreground);
@@ -44,26 +44,26 @@
   height: 50%;
 }
 
-.main div[class="payment_log_container"] {
+.main div[class="transaction_log_container"] {
   grid-area: transactions;
 }
-.main div[class="payment_log"] {
+.main div[class="transaction_log"] {
   overflow-y: scroll;
 }
 
-.main div[class="payment_log_container"] p[class="payment_log_key"] {
+.main div[class="transaction_log_container"] p[class="transaction_log_key"] {
   padding: 0;
   margin-top: -0.2em;
 }
 
-.main div[class="payment_log_container"] span {
+.main div[class="transaction_log_container"] span {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 20px;
 }
 
-.main div[class="payment_log_container"] button {
+.main div[class="transaction_log_container"] button {
   font-size: 1em;
   height: fit-content;
 }
@@ -146,8 +146,16 @@
   span[class="member_action_buttons"]
   button {
   font-size: 0.9em;
-  background-color: #e6e6e6;
+  background-color: #d4d4d4;
   border-radius: 12px;
+}
+
+.main
+  div[class="member_list"]
+  div[class="member_item"]
+  span[class="member_action_buttons"]
+  button:hover {
+  background-color: #ffffff;
 }
 
 .main a[class="approve_deny_buttons"] {
@@ -166,6 +174,23 @@
   border-radius: 12px;
   background-color: #531e1e;
   padding: 1em;
+}
+
+/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+/*                              responsive shit                                */
+/* ---                                                                     --- */
+@media only screen and (max-width: 1244px) {
+  .main {
+    display: flex;
+
+    flex-direction: column;
+    gap: 1em;
+    width: 75%;
+    grid-template-columns: unset;
+    grid-template-rows: unset;
+    grid-template-areas: unset;
+    font-size: 1.5vw;
+  }
 }
 
 @media only screen and (max-width: 1000px) {

@@ -66,9 +66,11 @@ export default function AddPaymentModal({
     if (isAdmin) {
       member = memberSelectRef.current.value;
     }
+    // get local timezone offset
+    const tzoffset = new Date().getTimezoneOffset();
 
     const newPayment = {
-      timestamp: datetimeInputRef.current.valueAsNumber / 1000,
+      timestamp: datetimeInputRef.current.valueAsNumber / 1000 + tzoffset * 60,
       member: member,
       amount: amountInputRef.current.valueAsNumber,
     };
@@ -94,7 +96,7 @@ export default function AddPaymentModal({
       });
 
       // close modal
-      setDisplayAddPaymentModal((cur) => !cur);
+      setDisplayAddPaymentModal(false);
     } else {
       console.error(resp_json.error);
       if (resp.status === 403) {
@@ -105,6 +107,18 @@ export default function AddPaymentModal({
         toast.error("Error adding payment");
       }
     }
+  }
+
+  function formatLocalDateTime(date: Date): string {
+    const pad = (n: number) => n.toString().padStart(2, "0");
+
+    const Y = date.getFullYear();
+    const M = pad(date.getMonth() + 1);
+    const D = pad(date.getDate());
+    const h = pad(date.getHours());
+    const m = pad(date.getMinutes());
+
+    return `${Y}-${M}-${D}T${h}:${m}`;
   }
 
   return (
@@ -125,7 +139,7 @@ export default function AddPaymentModal({
         <label>Date + time</label>
         <input
           type="datetime-local"
-          defaultValue={new Date().toISOString().slice(0, 16)}
+          defaultValue={formatLocalDateTime(new Date())}
           ref={datetimeInputRef}
         />
         {isAdmin ? (
